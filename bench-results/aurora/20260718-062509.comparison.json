@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-17T19:22:58+00:00",
+    "generated_at": "2026-07-18T06:25:09+00:00",
     "gateways": [
       "aurora"
     ],
@@ -21,28 +21,28 @@
   },
   "results": {
     "aurora": {
-      "requests": 325970,
+      "requests": 325632,
       "rate": 10000,
-      "success_rate": 99.89017394238734,
-      "mean_latency_ms": 46.067571,
-      "p50_latency_ms": 40.641533,
-      "p90_latency_ms": 83.64100300000001,
-      "p95_latency_ms": 99.78612000000001,
-      "p99_latency_ms": 135.346533,
-      "p999_latency_ms": 182.347872,
-      "max_latency_ms": 292.37825,
-      "throughput_rps": 5432.833333333333,
-      "timestamp": "2026-07-17T19:22:27Z",
-      "status_200": 325612,
+      "success_rate": 99.89466637185535,
+      "mean_latency_ms": 46.076516999999996,
+      "p50_latency_ms": 39.667659,
+      "p90_latency_ms": 84.33022199999999,
+      "p95_latency_ms": 103.06049300000001,
+      "p99_latency_ms": 145.306628,
+      "p999_latency_ms": 204.367321,
+      "max_latency_ms": 287.854522,
+      "throughput_rps": 5427.2,
+      "timestamp": "2026-07-18T06:25:09Z",
+      "status_200": 325289,
       "status_4xx": 0,
       "status_5xx": 0,
       "status_other": 0,
-      "allocs_per_op": 67.87185017026107,
-      "bytes_per_op": 5855.19889560389,
+      "allocs_per_op": 67.67594708136792,
+      "bytes_per_op": 5839.885244693396,
       "error_breakdown": [
         {
           "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
-          "count": 358
+          "count": 343
         }
       ]
     }
