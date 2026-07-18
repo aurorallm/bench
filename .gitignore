@@ -1,6 +1,11 @@
 # Benchmark results
 # bench-results/
 
+# Downloaded competitor binaries (large)
+bin/linux/axonhub*
+bin/mac/axonhub*
+bin/windows/axonhub*
+
 # Temp/log files
 *.log
 *.tmp
