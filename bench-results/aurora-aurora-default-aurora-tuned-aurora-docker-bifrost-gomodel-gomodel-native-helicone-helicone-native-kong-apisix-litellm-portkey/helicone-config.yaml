@@ -1,0 +1,5 @@
+providers:
+  openai:
+    models:
+      - "gpt-4o-mini"
+    base-url: "http://127.0.0.1:9099/v1"

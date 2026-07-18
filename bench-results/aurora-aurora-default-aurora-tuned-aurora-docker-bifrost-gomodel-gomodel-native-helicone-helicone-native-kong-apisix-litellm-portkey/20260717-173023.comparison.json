@@ -1,0 +1,532 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-17T17:30:23+00:00",
+    "gateways": [
+      "apisix",
+      "aurora",
+      "aurora-default",
+      "aurora-docker",
+      "aurora-tuned",
+      "bifrost",
+      "gomodel",
+      "gomodel-native",
+      "helicone",
+      "helicone-native",
+      "kong",
+      "litellm",
+      "portkey"
+    ],
+    "baseline": "apisix",
+    "tool": "aurora-bench-cli (POSIX-timed)",
+    "machine": {
+      "hostname": "codespaces-2c14c1",
+      "os": "Linux codespaces-2c14c1 6.8.0-1052-azure #58~22.04.1-Ubuntu SMP Thu Mar 26 05:02:21 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "arch": "x86_64",
+      "logical_processors": 4
+    },
+    "config": {
+      "rate": 10000,
+      "duration_seconds": 60,
+      "model": "gpt-4o-mini",
+      "endpoint": "/v1/chat/completions"
+    }
+  },
+  "results": {
+    "aurora": {
+      "requests": 357631,
+      "rate": 10000,
+      "success_rate": 99.92841783849833,
+      "mean_latency_ms": 41.599815,
+      "p50_latency_ms": 36.905604000000004,
+      "p90_latency_ms": 75.729461,
+      "p95_latency_ms": 90.44909299999999,
+      "p99_latency_ms": 121.542628,
+      "p999_latency_ms": 175.21869700000002,
+      "max_latency_ms": 283.203944,
+      "throughput_rps": 5960.516666666666,
+      "timestamp": "2026-07-17T17:14:15Z",
+      "status_200": 357375,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 68.12503669983866,
+      "bytes_per_op": 5905.340666776649,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
+          "count": 256
+        }
+      ]
+    },
+    "gomodel-native": {
+      "requests": 274320,
+      "rate": 10000,
+      "success_rate": 99.86512102653835,
+      "mean_latency_ms": 55.321438,
+      "p50_latency_ms": 50.158962,
+      "p90_latency_ms": 97.096314,
+      "p95_latency_ms": 114.129789,
+      "p99_latency_ms": 151.41391000000002,
+      "p999_latency_ms": 205.18678100000002,
+      "max_latency_ms": 320.818182,
+      "throughput_rps": 4572,
+      "timestamp": "2026-07-17T17:22:13Z",
+      "status_200": 273950,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 68.06527777777778,
+      "bytes_per_op": 5861.765995917177,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8091/v1/chat/completions\": context deadline exceeded",
+          "count": 370
+        }
+      ]
+    },
+    "apisix": {
+      "requests": 488727,
+      "rate": 10000,
+      "success_rate": 99.96828495253996,
+      "mean_latency_ms": 27.60926,
+      "p50_latency_ms": 23.758367999999997,
+      "p90_latency_ms": 50.448488,
+      "p95_latency_ms": 60.238065,
+      "p99_latency_ms": 82.53042400000001,
+      "p999_latency_ms": 113.78252599999999,
+      "max_latency_ms": 213.95622,
+      "throughput_rps": 8145.45,
+      "timestamp": "2026-07-17T17:27:37Z",
+      "status_200": 488572,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 68.0370861442073,
+      "bytes_per_op": 5865.545860981693,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:9080/v1/chat/completions\": context deadline exceeded",
+          "count": 155
+        }
+      ]
+    },
+    "aurora-tuned": {
+      "requests": 348425,
+      "rate": 10000,
+      "success_rate": 99.91447226806342,
+      "mean_latency_ms": 42.85704,
+      "p50_latency_ms": 38.149921000000006,
+      "p90_latency_ms": 77.751539,
+      "p95_latency_ms": 92.46941699999999,
+      "p99_latency_ms": 124.925862,
+      "p999_latency_ms": 169.803252,
+      "max_latency_ms": 253.51592,
+      "throughput_rps": 5807.083333333333,
+      "timestamp": "2026-07-17T17:16:49Z",
+      "status_200": 348127,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 68.09108703451246,
+      "bytes_per_op": 5858.9002052091555,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
+          "count": 298
+        }
+      ]
+    },
+    "aurora-default": {
+      "requests": 355845,
+      "rate": 10000,
+      "success_rate": 99.89967542047802,
+      "mean_latency_ms": 41.852531,
+      "p50_latency_ms": 37.252798,
+      "p90_latency_ms": 75.48094499999999,
+      "p95_latency_ms": 90.26881,
+      "p99_latency_ms": 121.016717,
+      "p999_latency_ms": 163.92316000000002,
+      "max_latency_ms": 250.90048199999998,
+      "throughput_rps": 5930.75,
+      "timestamp": "2026-07-17T17:15:32Z",
+      "status_200": 355488,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 67.96650788967106,
+      "bytes_per_op": 5893.811991175933,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
+          "count": 357
+        }
+      ]
+    },
+    "litellm": {
+      "requests": 9277,
+      "rate": 10000,
+      "success_rate": 95.89306888002587,
+      "mean_latency_ms": 1654.379543,
+      "p50_latency_ms": 1537.2132760000002,
+      "p90_latency_ms": 1872.4650600000002,
+      "p95_latency_ms": 1925.9043820000002,
+      "p99_latency_ms": 11926.658705,
+      "p999_latency_ms": 25473.223993,
+      "max_latency_ms": 27239.217462,
+      "throughput_rps": 154.61666666666667,
+      "timestamp": "2026-07-17T17:29:03Z",
+      "status_200": 8896,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 110.68448851999568,
+      "bytes_per_op": 8575.649024469118,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8082/v1/chat/completions\": context deadline exceeded",
+          "count": 381
+        }
+      ]
+    },
+    "portkey": {
+      "requests": 71099,
+      "rate": 10000,
+      "success_rate": 99.46412748421216,
+      "mean_latency_ms": 215.906939,
+      "p50_latency_ms": 205.6209,
+      "p90_latency_ms": 234.487396,
+      "p95_latency_ms": 252.15671600000002,
+      "p99_latency_ms": 296.000537,
+      "p999_latency_ms": 7711.351886,
+      "max_latency_ms": 14147.841667,
+      "throughput_rps": 1184.9833333333333,
+      "timestamp": "2026-07-17T17:30:22Z",
+      "status_200": 70718,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 83.12645747478868,
+      "bytes_per_op": 6638.640543467559,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8787/v1/chat/completions\": context deadline exceeded",
+          "count": 381
+        }
+      ]
+    },
+    "helicone-native": {
+      "requests": 215605,
+      "rate": 10000,
+      "success_rate": 99.83488323554649,
+      "mean_latency_ms": 71.040595,
+      "p50_latency_ms": 66.301011,
+      "p90_latency_ms": 116.137479,
+      "p95_latency_ms": 132.54397,
+      "p99_latency_ms": 168.580019,
+      "p999_latency_ms": 220.39475,
+      "max_latency_ms": 318.106641,
+      "throughput_rps": 3593.4166666666665,
+      "timestamp": "2026-07-17T17:24:55Z",
+      "status_200": 215249,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 87.00987917719904,
+      "bytes_per_op": 10957.905428909347,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8080/openai/chat/completions\": context deadline exceeded",
+          "count": 356
+        }
+      ]
+    },
+    "kong": {
+      "requests": 469743,
+      "rate": 10000,
+      "success_rate": 99.96402288059642,
+      "mean_latency_ms": 28.92334,
+      "p50_latency_ms": 24.529929,
+      "p90_latency_ms": 53.505982,
+      "p95_latency_ms": 64.764194,
+      "p99_latency_ms": 91.423768,
+      "p999_latency_ms": 136.309285,
+      "max_latency_ms": 247.94722199999998,
+      "throughput_rps": 7829.05,
+      "timestamp": "2026-07-17T17:26:17Z",
+      "status_200": 469574,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 75.48959750331564,
+      "bytes_per_op": 6441.937484965183,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8000/v1/chat/completions\": context deadline exceeded",
+          "count": 169
+        }
+      ]
+    },
+    "bifrost": {
+      "requests": 254874,
+      "rate": 10000,
+      "success_rate": 99.8587537371407,
+      "mean_latency_ms": 59.675571,
+      "p50_latency_ms": 57.269958,
+      "p90_latency_ms": 95.478768,
+      "p95_latency_ms": 111.327421,
+      "p99_latency_ms": 149.860524,
+      "p999_latency_ms": 200.972068,
+      "max_latency_ms": 286.863951,
+      "throughput_rps": 4247.9,
+      "timestamp": "2026-07-17T17:19:30Z",
+      "status_200": 254514,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 92.03295746133384,
+      "bytes_per_op": 7766.110533047702,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8080/v1/chat/completions\": context deadline exceeded",
+          "count": 360
+        }
+      ]
+    },
+    "aurora-docker": {
+      "requests": 338422,
+      "rate": 10000,
+      "success_rate": 99.91194425894298,
+      "mean_latency_ms": 44.287295,
+      "p50_latency_ms": 39.337263,
+      "p90_latency_ms": 78.788445,
+      "p95_latency_ms": 92.936688,
+      "p99_latency_ms": 122.33714900000001,
+      "p999_latency_ms": 164.03647700000002,
+      "max_latency_ms": 240.645726,
+      "throughput_rps": 5640.366666666667,
+      "timestamp": "2026-07-17T17:18:09Z",
+      "status_200": 338124,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 68.05024496043401,
+      "bytes_per_op": 5863.009260627264,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8082/v1/chat/completions\": context deadline exceeded",
+          "count": 298
+        }
+      ]
+    },
+    "helicone": {
+      "requests": 191991,
+      "rate": 10000,
+      "success_rate": 99.82811694298171,
+      "mean_latency_ms": 79.730541,
+      "p50_latency_ms": 75.60177999999999,
+      "p90_latency_ms": 127.426515,
+      "p95_latency_ms": 143.37175599999998,
+      "p99_latency_ms": 175.055093,
+      "p999_latency_ms": 218.143789,
+      "max_latency_ms": 294.3811,
+      "throughput_rps": 3199.85,
+      "timestamp": "2026-07-17T17:23:32Z",
+      "status_200": 191661,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 87.05361188805725,
+      "bytes_per_op": 10992.379892807476,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8585/openai/chat/completions\": context deadline exceeded",
+          "count": 330
+        }
+      ]
+    },
+    "gomodel": {
+      "requests": 189804,
+      "rate": 10000,
+      "success_rate": 99.79610545615478,
+      "mean_latency_ms": 80.14597599999999,
+      "p50_latency_ms": 55.144802999999996,
+      "p90_latency_ms": 161.172625,
+      "p95_latency_ms": 207.26266700000002,
+      "p99_latency_ms": 364.775362,
+      "p999_latency_ms": 1536.8528569999999,
+      "max_latency_ms": 2701.932932,
+      "throughput_rps": 3163.4,
+      "timestamp": "2026-07-17T17:20:47Z",
+      "status_200": 189417,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 69.22608058839646,
+      "bytes_per_op": 5997.894248804029,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8091/v1/chat/completions\": context deadline exceeded",
+          "count": 387
+        }
+      ]
+    }
+  },
+  "deltas": {
+    "aurora_vs_apisix": {
+      "throughput_rps": -2184.9333333333334,
+      "mean_latency_ms": 13.990555,
+      "p50_latency_ms": 13.147236000000007,
+      "p90_latency_ms": 25.280973000000003,
+      "p95_latency_ms": 30.211027999999992,
+      "p99_latency_ms": 39.01220399999998,
+      "p999_latency_ms": 61.43617100000003,
+      "max_latency_ms": 69.24772399999998,
+      "success_rate": -0.039867114041626905,
+      "allocs_per_op": 0.087950555631366,
+      "bytes_per_op": 39.79480579495612
+    },
+    "aurora-default_vs_apisix": {
+      "throughput_rps": -2214.7,
+      "mean_latency_ms": 14.243271,
+      "p50_latency_ms": 13.494430000000001,
+      "p90_latency_ms": 25.032456999999994,
+      "p95_latency_ms": 30.030745000000003,
+      "p99_latency_ms": 38.48629299999999,
+      "p999_latency_ms": 50.140634000000034,
+      "max_latency_ms": 36.94426199999998,
+      "success_rate": -0.06860953206194154,
+      "allocs_per_op": -0.07057825453622968,
+      "bytes_per_op": 28.26613019423985
+    },
+    "aurora-docker_vs_apisix": {
+      "throughput_rps": -2505.083333333333,
+      "mean_latency_ms": 16.678035,
+      "p50_latency_ms": 15.578895000000003,
+      "p90_latency_ms": 28.339957,
+      "p95_latency_ms": 32.698623000000005,
+      "p99_latency_ms": 39.806725,
+      "p999_latency_ms": 50.25395100000003,
+      "max_latency_ms": 26.689505999999994,
+      "success_rate": -0.05634069359697946,
+      "allocs_per_op": 0.01315881622672066,
+      "bytes_per_op": -2.536600354429538
+    },
+    "aurora-tuned_vs_apisix": {
+      "throughput_rps": -2338.366666666667,
+      "mean_latency_ms": 15.247779999999999,
+      "p50_latency_ms": 14.391553000000009,
+      "p90_latency_ms": 27.303050999999996,
+      "p95_latency_ms": 32.231351999999994,
+      "p99_latency_ms": 42.395437999999984,
+      "p999_latency_ms": 56.020725999999996,
+      "max_latency_ms": 39.55969999999999,
+      "success_rate": -0.053812684476540085,
+      "allocs_per_op": 0.05400089030516142,
+      "bytes_per_op": -6.645655772537793
+    },
+    "bifrost_vs_apisix": {
+      "throughput_rps": -3897.55,
+      "mean_latency_ms": 32.066311,
+      "p50_latency_ms": 33.511590000000005,
+      "p90_latency_ms": 45.030280000000005,
+      "p95_latency_ms": 51.089356,
+      "p99_latency_ms": 67.33009999999999,
+      "p999_latency_ms": 87.18954200000002,
+      "max_latency_ms": 72.90773099999998,
+      "success_rate": -0.10953121539925803,
+      "allocs_per_op": 23.995871317126543,
+      "bytes_per_op": 1900.5646720660088
+    },
+    "gomodel_vs_apisix": {
+      "throughput_rps": -4982.049999999999,
+      "mean_latency_ms": 52.53671599999999,
+      "p50_latency_ms": 31.386435,
+      "p90_latency_ms": 110.72413700000001,
+      "p95_latency_ms": 147.02460200000002,
+      "p99_latency_ms": 282.24493799999993,
+      "p999_latency_ms": 1423.070331,
+      "max_latency_ms": 2487.976712,
+      "success_rate": -0.17217949638518348,
+      "allocs_per_op": 1.188994444189163,
+      "bytes_per_op": 132.348387822336
+    },
+    "gomodel-native_vs_apisix": {
+      "throughput_rps": -3573.45,
+      "mean_latency_ms": 27.712178,
+      "p50_latency_ms": 26.400594000000005,
+      "p90_latency_ms": 46.64782600000001,
+      "p95_latency_ms": 53.891724,
+      "p99_latency_ms": 68.883486,
+      "p999_latency_ms": 91.40425500000003,
+      "max_latency_ms": 106.86196199999998,
+      "success_rate": -0.1031639260016135,
+      "allocs_per_op": 0.028191633570486374,
+      "bytes_per_op": -3.7798650645163434
+    },
+    "helicone_vs_apisix": {
+      "throughput_rps": -4945.6,
+      "mean_latency_ms": 52.121281,
+      "p50_latency_ms": 51.843411999999994,
+      "p90_latency_ms": 76.978027,
+      "p95_latency_ms": 83.13369099999997,
+      "p99_latency_ms": 92.52466899999999,
+      "p999_latency_ms": 104.36126300000001,
+      "max_latency_ms": 80.42488,
+      "success_rate": -0.14016800955825204,
+      "allocs_per_op": 19.016525743849954,
+      "bytes_per_op": 5126.834031825782
+    },
+    "helicone-native_vs_apisix": {
+      "throughput_rps": -4552.033333333333,
+      "mean_latency_ms": 43.431335,
+      "p50_latency_ms": 42.542643000000005,
+      "p90_latency_ms": 65.688991,
+      "p95_latency_ms": 72.305905,
+      "p99_latency_ms": 86.04959499999998,
+      "p999_latency_ms": 106.612224,
+      "max_latency_ms": 104.15042100000002,
+      "success_rate": -0.13340171699347536,
+      "allocs_per_op": 18.972793032991746,
+      "bytes_per_op": 5092.359567927654
+    },
+    "kong_vs_apisix": {
+      "throughput_rps": -316.39999999999964,
+      "mean_latency_ms": 1.3140800000000006,
+      "p50_latency_ms": 0.7715610000000019,
+      "p90_latency_ms": 3.0574940000000055,
+      "p95_latency_ms": 4.5261290000000045,
+      "p99_latency_ms": 8.893343999999985,
+      "p999_latency_ms": 22.526759,
+      "max_latency_ms": 33.99100199999998,
+      "success_rate": -0.004262071943543333,
+      "allocs_per_op": 7.4525113591083425,
+      "bytes_per_op": 576.3916239834898
+    },
+    "litellm_vs_apisix": {
+      "throughput_rps": -7990.833333333333,
+      "mean_latency_ms": 1626.770283,
+      "p50_latency_ms": 1513.4549080000002,
+      "p90_latency_ms": 1822.0165720000002,
+      "p95_latency_ms": 1865.6663170000002,
+      "p99_latency_ms": 11844.128281,
+      "p999_latency_ms": 25359.441467,
+      "max_latency_ms": 27025.261242,
+      "success_rate": -4.075216072514095,
+      "allocs_per_op": 42.64740237578839,
+      "bytes_per_op": 2710.1031634874244
+    },
+    "portkey_vs_apisix": {
+      "throughput_rps": -6960.466666666666,
+      "mean_latency_ms": 188.297679,
+      "p50_latency_ms": 181.86253200000002,
+      "p90_latency_ms": 184.038908,
+      "p95_latency_ms": 191.918651,
+      "p99_latency_ms": 213.470113,
+      "p999_latency_ms": 7597.56936,
+      "max_latency_ms": 13933.885447,
+      "success_rate": -0.5041574683278043,
+      "allocs_per_op": 15.089371330581386,
+      "bytes_per_op": 773.0946824858656
+    }
+  }
+}

@@ -1,0 +1,14 @@
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+apisix:
+  enable_admin: false
+plugins: []
+nginx_config:
+  main_config: |
+    access_log /dev/null;
+    error_log /dev/null crit;
+  http_config: |
+    access_log /dev/null;
+    error_log /dev/null crit;

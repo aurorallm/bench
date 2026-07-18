@@ -1,0 +1,19 @@
+{
+  "$schema": "https://www.getbifrost.ai/schema",
+  "providers": {
+    "openai": {
+      "keys": [
+        {
+          "name": "bench-key",
+          "value": "${API_KEY}",
+          "models": ["*"],
+          "weight": 1
+        }
+      ],
+      "network_config": {
+        "base_url": "${MOCK_URL}",
+        "default_request_timeout_in_seconds": 120
+      }
+    }
+  }
+}

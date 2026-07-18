@@ -1,0 +1,9 @@
+routes:
+  - id: openai-mock
+    uri: /v1/chat/completions
+    methods: ["POST"]
+    upstream:
+      nodes:
+        "host.docker.internal:MOCK_PORT": 1
+      type: roundrobin
+#END

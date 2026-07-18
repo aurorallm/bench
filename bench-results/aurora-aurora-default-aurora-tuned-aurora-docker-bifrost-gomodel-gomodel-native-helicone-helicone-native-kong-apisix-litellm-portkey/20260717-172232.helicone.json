@@ -1,0 +1,26 @@
+{
+  "requests": 191991,
+  "rate": 10000,
+  "success_rate": 99.82811694298171,
+  "mean_latency_ms": 79.730541,
+  "p50_latency_ms": 75.60177999999999,
+  "p90_latency_ms": 127.426515,
+  "p95_latency_ms": 143.37175599999998,
+  "p99_latency_ms": 175.055093,
+  "p999_latency_ms": 218.143789,
+  "max_latency_ms": 294.3811,
+  "throughput_rps": 3199.85,
+  "timestamp": "2026-07-17T17:23:32Z",
+  "status_200": 191661,
+  "status_4xx": 0,
+  "status_5xx": 0,
+  "status_other": 0,
+  "allocs_per_op": 87.05361188805725,
+  "bytes_per_op": 10992.379892807476,
+  "error_breakdown": [
+    {
+      "message": "Post \"http://127.0.0.1:8585/openai/chat/completions\": context deadline exceeded",
+      "count": 330
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+providers:
+  openai:
+    models:
+      - "gpt-4o-mini"
+    base-url: "http://host.docker.internal:9099/v1"

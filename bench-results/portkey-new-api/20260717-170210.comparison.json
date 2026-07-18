@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-17T17:02:10+00:00",
+    "gateways": [
+      "new-api",
+      "portkey"
+    ],
+    "baseline": "new-api",
+    "tool": "aurora-bench-cli (POSIX-timed)",
+    "machine": {
+      "hostname": "codespaces-2c14c1",
+      "os": "Linux codespaces-2c14c1 6.8.0-1052-azure #58~22.04.1-Ubuntu SMP Thu Mar 26 05:02:21 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "arch": "x86_64",
+      "logical_processors": 4
+    },
+    "config": {
+      "rate": 100,
+      "duration_seconds": 20,
+      "model": "gpt-4o-mini",
+      "endpoint": "/v1/chat/completions"
+    }
+  },
+  "results": {
+    "new-api": {
+      "requests": 1091,
+      "rate": 100,
+      "success_rate": 68.37763519706691,
+      "mean_latency_ms": 3610.065806,
+      "p50_latency_ms": 2538.449132,
+      "p90_latency_ms": 9150.381687,
+      "p95_latency_ms": 10864.563977,
+      "p99_latency_ms": 14847.208030999998,
+      "p999_latency_ms": 14880.096191999999,
+      "max_latency_ms": 14883.199037,
+      "throughput_rps": 54.55,
+      "timestamp": "2026-07-17T17:02:09Z",
+      "status_200": 746,
+      "status_4xx": 0,
+      "status_5xx": 5,
+      "status_other": 0,
+      "allocs_per_op": 79.01833180568286,
+      "bytes_per_op": 9436.45829514207,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:3001/v1/chat/completions\": context deadline exceeded",
+          "count": 340
+        }
+      ]
+    },
+    "portkey": {
+      "requests": 1792,
+      "rate": 100,
+      "success_rate": 100,
+      "mean_latency_ms": 213.835924,
+      "p50_latency_ms": 206.341536,
+      "p90_latency_ms": 285.736148,
+      "p95_latency_ms": 381.986869,
+      "p99_latency_ms": 421.86148299999996,
+      "p999_latency_ms": 432.46094899999997,
+      "max_latency_ms": 433.03939,
+      "throughput_rps": 89.6,
+      "timestamp": "2026-07-17T17:01:10Z",
+      "status_200": 1792,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 90.64676339285714,
+      "bytes_per_op": 8862.67857142857
+    }
+  },
+  "deltas": {
+    "portkey_vs_new-api": {
+      "throughput_rps": 35.05,
+      "mean_latency_ms": -3396.229882,
+      "p50_latency_ms": -2332.1075960000003,
+      "p90_latency_ms": -8864.645539,
+      "p95_latency_ms": -10482.577108,
+      "p99_latency_ms": -14425.346547999998,
+      "p999_latency_ms": -14447.635242999999,
+      "max_latency_ms": -14450.159647,
+      "success_rate": 31.62236480293309,
+      "allocs_per_op": 11.628431587174276,
+      "bytes_per_op": -573.7797237135001
+    }
+  }
+}

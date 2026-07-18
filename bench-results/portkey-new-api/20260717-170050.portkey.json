@@ -1,0 +1,20 @@
+{
+  "requests": 1792,
+  "rate": 100,
+  "success_rate": 100,
+  "mean_latency_ms": 213.835924,
+  "p50_latency_ms": 206.341536,
+  "p90_latency_ms": 285.736148,
+  "p95_latency_ms": 381.986869,
+  "p99_latency_ms": 421.86148299999996,
+  "p999_latency_ms": 432.46094899999997,
+  "max_latency_ms": 433.03939,
+  "throughput_rps": 89.6,
+  "timestamp": "2026-07-17T17:01:10Z",
+  "status_200": 1792,
+  "status_4xx": 0,
+  "status_5xx": 0,
+  "status_other": 0,
+  "allocs_per_op": 90.64676339285714,
+  "bytes_per_op": 8862.67857142857
+}

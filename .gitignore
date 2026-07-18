@@ -1,0 +1,36 @@
+# Benchmark results
+# bench-results/
+
+# Downloaded binaries
+bin/
+
+# Temp/log files
+*.log
+*.tmp
+*.err
+*.pprof
+*.out
+
+# Cache
+.cache/
+
+# Database
+*.db
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+data/
+*.db
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md

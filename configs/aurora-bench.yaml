@@ -1,0 +1,32 @@
+# Aurora benchmark-optimized config
+# Disable everything that Bifrost does not do to ensure fair comparison.
+server:
+  pprof_enabled: true
+  admin_endpoints_enabled: false
+  admin_ui_enabled: false
+  swagger_enabled: false
+
+logging:
+  enabled: false
+  disable_request_logging: true
+  disable_request_body_snapshot: true
+
+usage:
+  enabled: false
+
+budgets:
+  enabled: false
+
+identity:
+  enabled: false
+
+passthrough:
+  disable_semantic_enrichment: true
+
+http:
+  max_idle_conns: 4096
+  max_idle_conns_per_host: 4096
+  max_conns_per_host: 256
+
+# Use same mock upstream as Bifrost
+# OPENAI_BASE_URL must still be set via env
