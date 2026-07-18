@@ -1,9 +1,6 @@
 # Benchmark results
 # bench-results/
 
-# Downloaded binaries
-bin/
-
 # Temp/log files
 *.log
 *.tmp
