@@ -85,7 +85,7 @@ competitor_start() {
     export AXONHUB_PROVIDER_QUOTA_CHECK_INTERVAL="24h"
 
     local old_pwd="$PWD"
-    cd "$bench_work_dir" && "$exe_path" > "$log_path" 2>"${log_path}.err" &
+    cd "$bench_work_dir" && "$exe_path" > /dev/null 2>&1 &
     local pid=$!
     cd "$old_pwd" 2>/dev/null || true
 
