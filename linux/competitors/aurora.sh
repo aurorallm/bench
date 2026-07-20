@@ -74,7 +74,7 @@ competitor_start() {
     export AURORA_CHAT_FAST_PATH_PASSTHROUGH="true"
     export HTTP_MAX_IDLE_CONNS="4096"
     export HTTP_MAX_IDLE_CONNS_PER_HOST="4096"
-    export HTTP_MAX_CONNS_PER_HOST="256"
+    export HTTP_MAX_CONNS_PER_HOST="0"
     export MODEL_LIST_URL=""
     export STORAGE_TYPE="sqlite"
     export IDENTITY_ENABLED="false"
@@ -93,6 +93,9 @@ competitor_start() {
     export COMBOS_ENABLED="false"
     export ADMIN_ENDPOINTS_ENABLED="false"
     export ADMIN_UI_ENABLED="false"
+    export GOGC="200"
+    export GOMEMLIMIT="6000MiB"
+    export CIRCUIT_BREAKER_FAILURE_THRESHOLD="0"
 
     local old_pwd="$PWD"
     cd "$bench_work_dir" && "$exe_path" > "$log_path" 2>"${log_path}.err" &
