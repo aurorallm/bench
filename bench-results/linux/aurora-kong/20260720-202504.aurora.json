@@ -1,0 +1,26 @@
+{
+  "requests": 401967,
+  "rate": 10000,
+  "success_rate": 99.9422838193185,
+  "mean_latency_ms": 36.080885,
+  "p50_latency_ms": 31.295203,
+  "p90_latency_ms": 67.550994,
+  "p95_latency_ms": 80.703968,
+  "p99_latency_ms": 108.518584,
+  "p999_latency_ms": 147.67754399999998,
+  "max_latency_ms": 199.350188,
+  "throughput_rps": 6699.45,
+  "timestamp": "2026-07-20T20:26:04Z",
+  "status_200": 401735,
+  "status_4xx": 0,
+  "status_5xx": 0,
+  "status_other": 0,
+  "allocs_per_op": 68.07384685807541,
+  "bytes_per_op": 5874.729258869509,
+  "error_breakdown": [
+    {
+      "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
+      "count": 232
+    }
+  ]
+}
