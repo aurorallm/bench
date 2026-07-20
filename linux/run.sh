@@ -193,10 +193,11 @@ else
     CLI_PATH=$(build_bench_cli "$BENCH_DIR")
 fi
 
+PLATFORM="linux"
 RESULTS_DIR="$BENCH_DIR/bench-results"
 SCENARIO_LABEL=$(IFS=-; echo "${SELECTED_NAMES[*]}")
 SCENARIO_LABEL="${SCENARIO_LABEL// /}"
-RUN_DIR="$RESULTS_DIR/${SCENARIO_LABEL//,/-vs-}"
+RUN_DIR="$RESULTS_DIR/$PLATFORM/${SCENARIO_LABEL//,/-vs-}"
 mkdir -p "$RUN_DIR"
 
 echo "Starting mock server on port $MOCK_PORT..."

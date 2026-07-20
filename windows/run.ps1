@@ -165,9 +165,10 @@ if ($Clean) {
     $cliPath = Build-BenchCli -BenchDir $repoRoot
 }
 
+$platform = "windows"
 $resultsDir = Join-Path $repoRoot "bench-results"
 $scenarioLabel = ($selected.Name -join "-vs-")
-$runDir = Join-Path $resultsDir $scenarioLabel
+$runDir = Join-Path $resultsDir $platform $scenarioLabel
 New-Item -ItemType Directory -Force -Path $runDir | Out-Null
 
 Write-Host "Starting mock server on port $MockPort..." -ForegroundColor Cyan

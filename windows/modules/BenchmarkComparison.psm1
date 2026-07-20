@@ -53,6 +53,7 @@ function Write-GenericComparison {
     $comparison = [ordered]@{
         metadata = [ordered]@{
             generated_at    = (Get-Date).ToString("o")
+            platform        = "windows"
             gateways        = $names
             baseline        = $baseName
             tool            = "aurora-bench-cli (QPC-timed)"

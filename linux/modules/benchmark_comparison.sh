@@ -61,6 +61,7 @@ JSON
 {
   "metadata": {
     "generated_at": "$(date -Iseconds)",
+    "platform": "linux",
     "gateways": $(echo "$names" | jq -R 'split(" ")'),
     "baseline": "$base_name",
     "tool": "aurora-bench-cli (POSIX-timed)",

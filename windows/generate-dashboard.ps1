@@ -8,17 +8,29 @@ $ErrorActionPreference = "Stop"
 function Convert-JsonFile($path) {
     $raw = Get-Content $path -Raw
     $json = $raw | ConvertFrom-Json
-    $dirName = (Get-Item $path).Directory.Name
+    $dir = Get-Item $path
+    $dirName = $dir.Directory.Name
+    $parentDirName = $dir.Directory.Parent.Name
+    $validPlatforms = @("windows", "linux", "darwin")
+    $platform = if ($json.metadata.platform) {
+        $json.metadata.platform
+    } elseif ($validPlatforms -contains $parentDirName) {
+        $parentDirName
+    } else {
+        "unknown"
+    }
     $json | Add-Member -NotePropertyName "run_dir" -NotePropertyValue $dirName -Force
+    $json | Add-Member -NotePropertyName "platform" -NotePropertyValue $platform -Force
     $json | Add-Member -NotePropertyName "src_file" -NotePropertyValue $path -Force
     $json.metadata | Add-Member -NotePropertyName "run_dir" -NotePropertyValue $dirName -Force
+    $json.metadata | Add-Member -NotePropertyName "platform" -NotePropertyValue $platform -Force
     return $json
 }
 
 Write-Host "Scanning $ResultsDir for .comparison.json files..." -ForegroundColor Cyan
 $jsonFiles = Get-ChildItem -Path $ResultsDir -Recurse -Filter "*.comparison.json" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime
 if (-not $jsonFiles) { Write-Host "No comparison files found in $ResultsDir" -ForegroundColor Red; exit 1 }
-Write-Host "Found $($jsonFiles.Count) results" -ForegroundColor Green
+Write-Host "Found $($jsonFiles.Count) results across platforms" -ForegroundColor Green
 
 $runs = $jsonFiles | ForEach-Object { Convert-JsonFile $_.FullName }
 
@@ -36,6 +48,7 @@ foreach ($run in $runs) {
             run_num   = $runIdx
             run_label = $label
             run_dir   = $run.run_dir
+            platform  = $run.platform
             timestamp = if ($gw.timestamp) { $gw.timestamp } else { $run.metadata.generated_at }
             gateway   = $gwName
             rps       = [math]::Round($gw.throughput_rps, 2)
@@ -184,7 +197,7 @@ $html = @"
           <span class="text-xs mono" style="color:oklch(0.45 0 0)">$hostnameSafe · $cpusSafe CPUs · $osSafe</span>
         </div>
         <h1 class="text-3xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace">Aurora Gateway Benchmark</h1>
-        <p class="text-sm mt-1" style="color:oklch(0.55 0 0)">$runCount runs across $gwCount gateways · aggregated from bench-results/</p>
+        <p class="text-sm mt-1" style="color:oklch(0.55 0 0)">$runCount runs across $gwCount gateways · platforms: $(($runs | ForEach-Object { $_.platform } | Select-Object -Unique) -join ', ') · aggregated from bench-results/{platform}/</p>
       </div>
       <div class="flex items-center gap-3">
         <span class="badge badge-blue" id="latestDate"></span>
@@ -201,7 +214,7 @@ $html = @"
       <div class="overflow-x-auto">
         <table>
           <thead>
-            <tr><th>Gateway</th><th>Throughput</th><th>Target%</th><th>Success</th><th>P50</th><th>P90</th><th>P99</th><th>P999</th><th>Mean</th><th>Allocs/op</th><th>Bytes/op</th><th>Run</th></tr>
+            <tr><th>Gateway</th><th>Platform</th><th>Throughput</th><th>Target%</th><th>Success</th><th>P50</th><th>P90</th><th>P99</th><th>P999</th><th>Mean</th><th>Allocs/op</th><th>Bytes/op</th><th>Run</th></tr>
           </thead>
           <tbody id="comparisonTable"></tbody>
         </table>
@@ -211,7 +224,10 @@ $html = @"
     <!-- Run History -->
     <div class="card mb-6">
       <div class="section-title">Run History · Throughput Evolution</div>
-      <div class="flex flex-wrap gap-2 mb-4" id="gatewayTabs"></div>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex flex-wrap gap-1 mb-2 w-full" id="platformTabs"></div>
+        <div class="flex flex-wrap gap-1" id="gatewayTabs"></div>
+      </div>
       <div style="position:relative;height:300px">
         <canvas id="evolutionChart"></canvas>
       </div>
@@ -223,7 +239,7 @@ $html = @"
       <div class="overflow-x-auto">
         <table>
           <thead>
-            <tr><th>#</th><th>Run</th><th>Gateway</th><th>Throughput</th><th>Success</th><th>P50</th><th>P90</th><th>P99</th><th>P999</th><th>Mean</th><th>Target</th><th>Rate</th><th>Dur</th></tr>
+            <tr><th>#</th><th>Run</th><th>Platform</th><th>Gateway</th><th>Throughput</th><th>Success</th><th>P50</th><th>P90</th><th>P99</th><th>P999</th><th>Mean</th><th>Target</th><th>Rate</th><th>Dur</th></tr>
           </thead>
           <tbody id="historyTable"></tbody>
         </table>
@@ -282,6 +298,7 @@ $html = @"
       const cls = i < 3 ? medals[i] : '';
       ct.innerHTML += '<tr>' +
         '<td class="font-semibold ' + cls + '">' + g.gateway + '</td>' +
+        '<td class="mono text-xs" style="color:oklch(0.50 0 0)">' + (g.platform || '') + '</td>' +
         '<td class="mono font-bold" style="color:' + color(g.gateway) + '">' + g.rps.toLocaleString('en-IN',{maximumFractionDigits:0}) + '</td>' +
         '<td class="mono">' + pct + '%</td>' +
         '<td class="mono">' + fmt(g.success,2) + '%</td>' +
@@ -296,27 +313,62 @@ $html = @"
         '</tr>';
     });
 
-    // ─── Gateway Tabs ───────────────────────────────────────────────────
-    const gateways = [...new Set(history.map(h => h.gateway))];
-    const tabs = document.getElementById('gatewayTabs');
-    let activeGw = gateways[0] || '';
-    gateways.forEach(gw => {
-      const btn = document.createElement('button');
-      btn.className = 'tab' + (gw === activeGw ? ' active' : '');
-      btn.textContent = gw;
-      btn.onclick = () => {
-        tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        activeGw = gw;
-        renderChart();
+    // ─── Platform Tabs ──────────────────────────────────────────────────
+    const platforms = [...new Set(history.map(h => h.platform || '').filter(Boolean))];
+    const platformTabsContainer = document.getElementById('platformTabs');
+    let activePlatform = platforms.includes('windows') ? 'windows' : (platforms[0] || '');
+    if (platforms.length > 0) {
+      const allBtn = document.createElement('button');
+      allBtn.className = 'tab' + (activePlatform === '' ? ' active' : '');
+      allBtn.textContent = 'All';
+      allBtn.onclick = () => {
+        platformTabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        allBtn.classList.add('active');
+        activePlatform = '';
+        renderGatewayTabs();
       };
-      tabs.appendChild(btn);
-    });
+      platformTabsContainer.appendChild(allBtn);
+      platforms.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'tab' + (p === activePlatform ? ' active' : '');
+        btn.textContent = p;
+        btn.onclick = () => {
+          platformTabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          activePlatform = p;
+          renderGatewayTabs();
+        };
+        platformTabsContainer.appendChild(btn);
+      });
+    }
+
+    function renderGatewayTabs() {
+      const filtered = activePlatform ? history.filter(h => h.platform === activePlatform) : history;
+      const gateways = [...new Set(filtered.map(h => h.gateway))];
+      const tabs = document.getElementById('gatewayTabs');
+      tabs.innerHTML = '';
+      let activeGw = gateways[0] || '';
+      gateways.forEach(gw => {
+        const btn = document.createElement('button');
+        btn.className = 'tab' + (gw === activeGw ? ' active' : '');
+        btn.textContent = gw;
+        btn.onclick = () => {
+          tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          activeGw = gw;
+          renderChart();
+        };
+        tabs.appendChild(btn);
+      });
+      if (activeGw) renderChart();
+    }
+    renderGatewayTabs();
 
     // ─── Evolution Chart ────────────────────────────────────────────────
     let chart = null;
     function renderChart() {
-      const data = history.filter(h => h.gateway === activeGw).sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
+      const filtered = activePlatform ? history.filter(h => h.platform === activePlatform) : history;
+      const data = filtered.filter(h => h.gateway === activeGw).sort((a,b) => new Date(a.timestamp) - new Date(b.timestamp));
       if (data.length === 0) return;
 
       const labels = data.map(h => {
@@ -369,11 +421,11 @@ $html = @"
               backgroundColor:'oklch(0.13 0 0)', borderColor:'oklch(0.25 0 0)', borderWidth:1.5,
               titleFont:{family:'JetBrains Mono',size:10}, bodyFont:{family:'JetBrains Mono',size:11},
               callbacks: {
-                afterBody: function(items) {
-                  const idx = items[0].dataIndex;
-                  const d = data[idx];
-                  return 'Run: ' + (d.run_dir || '') + '\\nTarget: ' + (d.rate||'?') + ' x ' + (d.duration||'?') + 's';
-                }
+                  afterBody: function(items) {
+                    const idx = items[0].dataIndex;
+                    const d = data[idx];
+                    return 'Run: ' + (d.run_dir || '') + '\\nPlatform: ' + (d.platform || '?') + '\\nTarget: ' + (d.rate||'?') + ' x ' + (d.duration||'?') + 's';
+                  }
               }
             }
           },
@@ -398,6 +450,7 @@ $html = @"
       ht.innerHTML += '<tr>' +
         '<td class="mono">' + (i+1) + '</td>' +
         '<td class="text-xs mono" style="color:oklch(0.55 0 0)">' + (h.run_dir||'') + '</td>' +
+        '<td class="mono text-xs" style="color:oklch(0.50 0 0)">' + (h.platform||'') + '</td>' +
         '<td class="font-semibold" style="color:' + color(h.gateway) + '">' + h.gateway + '</td>' +
         '<td class="mono font-bold">' + h.rps.toLocaleString('en-IN',{maximumFractionDigits:0}) + '</td>' +
         '<td class="mono">' + fmt(h.success,2) + '%</td>' +
