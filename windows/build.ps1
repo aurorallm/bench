@@ -52,13 +52,21 @@ finally {
 }
 
 $auroraOut = Join-Path $binDir "aurora-bench.exe"
-Write-Host "[3/3] Aurora gateway..." -ForegroundColor Cyan
-if (Test-Path $auroraOut) {
-    Write-Host "  Using pre-built Aurora: $auroraOut" -ForegroundColor Green
+$auroraRepo = Join-Path $repoRoot "..\Aurora_Gateway-oss"
+$auroraMain = Join-Path $auroraRepo "apps\aurora"
+Write-Host "[3/3] Aurora gateway (from OSS repo)..." -ForegroundColor Cyan
+if (Test-Path $auroraMain) {
+    Push-Location $auroraRepo
+    try {
+        go build -ldflags="-X 'aurora/internal/version.Version=dev' -X 'aurora/internal/version.Commit=oss' -s -w" -o $auroraOut ./apps/aurora
+        if (-not (Test-Path $auroraOut)) { throw "OSS build failed" }
+        Write-Host "  -> $auroraOut" -ForegroundColor Green
+    } finally {
+        Pop-Location
+    }
 } else {
-    Write-Host "  WARNING: No pre-built Aurora binary found at $auroraOut" -ForegroundColor Yellow
-    Write-Host "  Aurora benchmarks will not work until a binary is placed there." -ForegroundColor Yellow
-    Write-Host "  Build it from the aurora repo: go build -o $auroraOut ./apps/aurora" -ForegroundColor Yellow
+    Write-Host "  ERROR: OSS repo not found at $auroraMain" -ForegroundColor Red
+    Write-Host "  Build it manually: go build -o $auroraOut ./apps/aurora" -ForegroundColor Yellow
 }
 
 Write-Host ""

@@ -4,13 +4,18 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"strings"
 	"time"
+
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 )
 
 var availableModels []map[string]any
@@ -52,8 +57,15 @@ func main() {
 		writeJSONBytes(w, http.StatusOK, []byte(`{"status":"ok"}`))
 	})
 
-	log.Printf("Mock OpenAI backend listening on :%s", port)
-	if err := http.ListenAndServe(":"+port, mux); err != nil {
+	log.Printf("Mock OpenAI backend listening on :%s (h2c)", port)
+	srv := &http.Server{
+		Addr:    ":" + port,
+		Handler: h2c.NewHandler(mux, &http2.Server{}),
+		ConnContext: func(ctx context.Context, c net.Conn) context.Context {
+			return ctx
+		},
+	}
+	if err := srv.ListenAndServe(); err != nil {
 		log.Fatal(err)
 	}
 }

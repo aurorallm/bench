@@ -166,7 +166,7 @@ mutation { updateChannelStatus(id: "$channelId", status: enabled) { id name stat
                     $null = Invoke-RestMethod -Uri "$baseUrl/admin/graphql" -Method Post -Body $disableBody2 -ContentType "application/json" -Headers $authHeader -UseBasicParsing -TimeoutSec 10
                     $disableBody3 = @{ query = "mutation { updateRetryPolicy(input: {enabled: false, maxChannelRetries: 0, maxSingleChannelRetries: 0}) }" } | ConvertTo-Json
                     $null = Invoke-RestMethod -Uri "$baseUrl/admin/graphql" -Method Post -Body $disableBody3 -ContentType "application/json" -Headers $authHeader -UseBasicParsing -TimeoutSec 10
-                    $disableBody4 = @{ query = "mutation { completeOnboarding(input: {dummy: \"\"}) }" } | ConvertTo-Json
+                    $disableBody4 = @{ query = 'mutation { completeOnboarding(input: {dummy: ""}) }' } | ConvertTo-Json
                     $null = Invoke-RestMethod -Uri "$baseUrl/admin/graphql" -Method Post -Body $disableBody4 -ContentType "application/json" -Headers $authHeader -UseBasicParsing -TimeoutSec 10
                 } catch { }
                 Write-Host "  Background tasks disabled" -ForegroundColor DarkGray
