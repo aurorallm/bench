@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-21T06:15:27+00:00",
+    "platform": "linux",
+    "gateways": [
+      "aurora"
+    ],
+    "baseline": "aurora",
+    "tool": "aurora-bench-cli (POSIX-timed)",
+    "machine": {
+      "hostname": "codespaces-9b129f",
+      "os": "Linux codespaces-9b129f 6.8.0-1052-azure #58~22.04.1-Ubuntu SMP Thu Mar 26 05:02:21 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "arch": "x86_64",
+      "logical_processors": 4
+    },
+    "config": {
+      "rate": 10000,
+      "duration_seconds": 60,
+      "model": "gpt-4o-mini",
+      "endpoint": "/v1/chat/completions"
+    }
+  },
+  "results": {
+    "aurora": {
+      "requests": 379789,
+      "rate": 10000,
+      "success_rate": 99.9052105247914,
+      "mean_latency_ms": 38.531872,
+      "p50_latency_ms": 33.198814,
+      "p90_latency_ms": 71.627291,
+      "p95_latency_ms": 86.03851999999999,
+      "p99_latency_ms": 121.409114,
+      "p999_latency_ms": 175.34122,
+      "max_latency_ms": 385.859648,
+      "throughput_rps": 6329.816666666667,
+      "timestamp": "2026-07-21T06:15:27Z",
+      "status_200": 379429,
+      "status_4xx": 0,
+      "status_5xx": 0,
+      "status_other": 0,
+      "allocs_per_op": 67.87229224648424,
+      "bytes_per_op": 5868.772186661541,
+      "error_breakdown": [
+        {
+          "message": "Post \"http://127.0.0.1:8081/v1/chat/completions\": context deadline exceeded",
+          "count": 360
+        }
+      ]
+    }
+  },
+  "deltas": {}
+}
