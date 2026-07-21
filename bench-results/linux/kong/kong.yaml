@@ -1,0 +1,9 @@
+_format_version: "3.0"
+services:
+  - name: mock-upstream
+    url: http://host.docker.internal:9099
+    routes:
+      - name: chat-route
+        paths:
+          - /v1/chat/completions
+        strip_path: false

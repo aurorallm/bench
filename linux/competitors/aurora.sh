@@ -70,12 +70,7 @@ competitor_start() {
     export OPENAI_API_KEY="$API_KEY"
     export AURORA_MASTER_KEY="$API_KEY"
     export AURORA_MINIMAL_BENCH_MODE="true"
-    export AURORA_H2C_ENABLED="true"
     export AURORA_CHAT_FAST_PATH_PASSTHROUGH="true"
-    export HTTP_MAX_IDLE_CONNS="4096"
-    export HTTP_MAX_IDLE_CONNS_PER_HOST="4096"
-    export HTTP_MAX_CONNS_PER_HOST="0"
-    export MODEL_LIST_URL=""
     export STORAGE_TYPE="sqlite"
     export IDENTITY_ENABLED="false"
     export GUARDRAILS_ENABLED="false"
@@ -89,13 +84,12 @@ competitor_start() {
     export SWAGGER_ENABLED="false"
     export PPROF_ENABLED="true"
     export ENABLE_ANTHROPIC_INGRESS="false"
-    export CLI_TOOLS_ENABLED="false"
-    export COMBOS_ENABLED="false"
-    export ADMIN_ENDPOINTS_ENABLED="false"
-    export ADMIN_UI_ENABLED="false"
-    export GOGC="200"
     export GOMEMLIMIT="6000MiB"
     export CIRCUIT_BREAKER_FAILURE_THRESHOLD="0"
+    # Features below are now default-off in code (no longer need env overrides):
+    #   AURORA_H2C_ENABLED, HTTP_MAX_IDLE_CONNS, HTTP_MAX_IDLE_CONNS_PER_HOST,
+    #   HTTP_MAX_CONNS_PER_HOST, MODEL_LIST_URL, CLI_TOOLS_ENABLED, COMBOS_ENABLED,
+    #   ADMIN_ENDPOINTS_ENABLED, ADMIN_UI_ENABLED, GOGC
 
     local old_pwd="$PWD"
     cd "$bench_work_dir" && "$exe_path" > "$log_path" 2>"${log_path}.err" &
