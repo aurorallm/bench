@@ -40,26 +40,9 @@ competitor_start() {
         -e OPENAI_BASE_URL="http://host.docker.internal:${mock_port}" \
         -e AURORA_MINIMAL_BENCH_MODE=true \
         -e AURORA_CHAT_FAST_PATH_PASSTHROUGH=true \
-        -e HTTP_MAX_IDLE_CONNS=4096 \
-        -e HTTP_MAX_IDLE_CONNS_PER_HOST=4096 \
         -e HTTP_MAX_CONNS_PER_HOST=256 \
-        -e MODEL_LIST_URL="" \
-        -e STORAGE_TYPE=sqlite \
-        -e IDENTITY_ENABLED=false \
-        -e GUARDRAILS_ENABLED=false \
-        -e USAGE_ENABLED=false \
-        -e LOGGING_ENABLED=false \
-        -e METRICS_ENABLED=false \
-        -e SEMANTIC_CACHE_ENABLED=false \
-        -e RESPONSE_CACHE_SIMPLE_ENABLED=false \
-        -e TOKEN_SAVER_ENABLED=false \
-        -e PROMPT_CACHE_MODE=off \
-        -e SWAGGER_ENABLED=false \
-        -e ENABLE_ANTHROPIC_INGRESS=false \
-        -e CLI_TOOLS_ENABLED=false \
-        -e COMBOS_ENABLED=false \
-        -e ADMIN_ENDPOINTS_ENABLED=false \
-        -e ADMIN_UI_ENABLED=false \
+        -e DISABLE_REQUEST_BODY_SNAPSHOT=true \
+        -e DISABLE_PASSTHROUGH_SEMANTIC_ENRICHMENT=true \
         aurorahq/aurora:latest > /dev/null 2>&1
 
     local container_id

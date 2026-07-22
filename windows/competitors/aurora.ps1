@@ -71,49 +71,34 @@ return @{
         $logPath = Join-Path $ResultsDir "aurora-server.log"
         $benchWorkDir = Join-Path $ResultsDir "aurora-workdir"
         New-Item -ItemType Directory -Force -Path $benchWorkDir | Out-Null
+
+        # Only override what differs from code defaults.
+        # Code defaults already provide: h2c always-on, HTTP_MAX_IDLE_CONNS=4096,
+        # HTTP_MAX_CONNS_PER_HOST=256, PROMPT_CACHE_MODE=off, DISABLE_REQUEST_LOGGING=true,
+        # all non-essential features disabled by default.
         $envOverrides = @{
-            PORT                         = [string]$Port
-            OPENAI_BASE_URL              = $MockUrl
-            OPENAI_API_KEY               = $ApiKey
-            AURORA_MASTER_KEY            = $ApiKey
-            AURORA_MINIMAL_BENCH_MODE    = "true"
-            AURORA_CHAT_FAST_PATH_PASSTHROUGH = "true"
-            DISABLE_REQUEST_LOGGING      = "true"
-            LOG_LEVEL                    = "error"
-            LOGGING_ENABLED              = "false"
-            CLI_TOOLS_ENABLED            = "false"
-            COMBOS_ENABLED               = "false"
-            ADMIN_ENDPOINTS_ENABLED      = "false"
-            ADMIN_UI_ENABLED             = "false"
-            AURORA_H2C_ENABLED           = "true"
-            HTTP_MAX_IDLE_CONNS          = "4096"
-            HTTP_MAX_IDLE_CONNS_PER_HOST = "4096"
-            HTTP_MAX_CONNS_PER_HOST      = "256"
-            MODEL_LIST_URL               = ""
-            STORAGE_TYPE                 = "sqlite"
-            IDENTITY_ENABLED             = "false"
-            GUARDRAILS_ENABLED           = "false"
-            USAGE_ENABLED                = "false"
-            METRICS_ENABLED              = "false"
-            SEMANTIC_CACHE_ENABLED       = "false"
-            RESPONSE_CACHE_SIMPLE_ENABLED = "false"
-            TOKEN_SAVER_ENABLED          = "false"
-            PROMPT_CACHE_MODE            = "off"
-            SWAGGER_ENABLED              = "false"
-            PPROF_ENABLED                = "true"
-            ENABLE_ANTHROPIC_INGRESS     = "false"
-            GOMEMLIMIT                   = "6000MiB"
-            CIRCUIT_BREAKER_FAILURE_THRESHOLD = "0"
+            PORT                               = [string]$Port
+            OPENAI_BASE_URL                    = $MockUrl
+            OPENAI_API_KEY                     = $ApiKey
+            AURORA_MASTER_KEY                  = $ApiKey
+
+            AURORA_MINIMAL_BENCH_MODE          = "true"
+            AURORA_CHAT_FAST_PATH_PASSTHROUGH  = "true"
+            PPROF_ENABLED                      = "true"
+            GOMEMLIMIT                         = "6000MiB"
+            CIRCUIT_BREAKER_FAILURE_THRESHOLD  = "0"
+            DISABLE_REQUEST_BODY_SNAPSHOT      = "true"
+            DISABLE_PASSTHROUGH_SEMANTIC_ENRICHMENT = "true"
         }
 
         return Start-GatewayProcess -ExePath $ExePath -EnvOverrides $envOverrides -LogPath $logPath -WorkingDir $benchWorkDir -NewWindow:$NewWindow
     }.GetNewClosure()
 
     FairnessNotes = @(
-        "AURORA_MINIMAL_BENCH_MODE=true disables request logging + body snapshot + usage + tightens timeouts",
-        "AURORA_CHAT_FAST_PATH_PASSTHROUGH=true bypasses JSON decode/re-encode for simple pass-through",
-        "PROMPT_CACHE_MODE=off skips prompt cache breakpoint injection",
-        "All features disabled: guardrails, cache, token saver, admin, identity, swagger, combos, anthropic ingress",
+        "AURORA_MINIMAL_BENCH_MODE=true - disables request logging + skips telemetry + auth rate limiter",
+        "AURORA_CHAT_FAST_PATH_PASSTHROUGH=true - bypasses JSON decode/re-encode for passthrough requests",
+        "DISABLE_REQUEST_BODY_SNAPSHOT=true - skips eager body capture (~3% CPU)",
+        "DISABLE_PASSTHROUGH_SEMANTIC_ENRICHMENT=true - skips provider-owned metadata enrichment",
         "Binary auto-downloaded from github.com/aurorallm/aurora/releases"
     )
 }

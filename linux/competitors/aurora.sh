@@ -69,27 +69,27 @@ competitor_start() {
     export OPENAI_BASE_URL="$MOCK_URL"
     export OPENAI_API_KEY="$API_KEY"
     export AURORA_MASTER_KEY="$API_KEY"
+
+    # Performance tuning overrides (differs from code defaults)
     export AURORA_MINIMAL_BENCH_MODE="true"
     export AURORA_CHAT_FAST_PATH_PASSTHROUGH="true"
-    export STORAGE_TYPE="sqlite"
-    export IDENTITY_ENABLED="false"
-    export GUARDRAILS_ENABLED="false"
-    export USAGE_ENABLED="false"
-    export LOGGING_ENABLED="false"
-    export METRICS_ENABLED="false"
-    export SEMANTIC_CACHE_ENABLED="false"
-    export RESPONSE_CACHE_SIMPLE_ENABLED="false"
-    export TOKEN_SAVER_ENABLED="false"
-    export PROMPT_CACHE_MODE="off"
-    export SWAGGER_ENABLED="false"
+    export HTTP_MAX_CONNS_PER_HOST="256"
     export PPROF_ENABLED="true"
-    export ENABLE_ANTHROPIC_INGRESS="false"
     export GOMEMLIMIT="6000MiB"
     export CIRCUIT_BREAKER_FAILURE_THRESHOLD="0"
-    # Features below are now default-off in code (no longer need env overrides):
-    #   AURORA_H2C_ENABLED, HTTP_MAX_IDLE_CONNS, HTTP_MAX_IDLE_CONNS_PER_HOST,
-    #   HTTP_MAX_CONNS_PER_HOST, MODEL_LIST_URL, CLI_TOOLS_ENABLED, COMBOS_ENABLED,
-    #   ADMIN_ENDPOINTS_ENABLED, ADMIN_UI_ENABLED, GOGC
+    export DISABLE_REQUEST_BODY_SNAPSHOT="true"
+    export DISABLE_PASSTHROUGH_SEMANTIC_ENRICHMENT="true"
+
+    # Code defaults that are already optimal (no override needed):
+    #   HTTP_MAX_IDLE_CONNS=4096, HTTP_MAX_IDLE_CONNS_PER_HOST=4096,
+    #   MODEL_LIST_URL="", STORAGE_TYPE=sqlite, PROMPT_CACHE_MODE=off,
+    #   GUARDRAILS_ENABLED=false, USAGE_ENABLED=false, LOGGING_ENABLED=false,
+    #   METRICS_ENABLED=false, SEMANTIC_CACHE_ENABLED=false,
+    #   RESPONSE_CACHE_SIMPLE_ENABLED=false, TOKEN_SAVER_ENABLED=false,
+    #   SWAGGER_ENABLED=false, ENABLE_ANTHROPIC_INGRESS=false,
+    #   CLI_TOOLS_ENABLED=false, COMBOS_ENABLED=false,
+    #   ADMIN_ENDPOINTS_ENABLED=false, ADMIN_UI_ENABLED=false,
+    #   DISABLE_REQUEST_LOGGING=true, AURORA_H2C_ENABLED always-on
 
     local old_pwd="$PWD"
     cd "$bench_work_dir" && "$exe_path" > "$log_path" 2>"${log_path}.err" &

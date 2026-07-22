@@ -24,43 +24,25 @@ return @{
     Start = {
         param($ExePath, $Port, $MockUrl, $ApiKey, $ResultsDir, [switch]$NewWindow)
         $logPath = Join-Path $ResultsDir "aurora-tuned-server.log"
+
+        # Bench-mode tuning only — no feature disablements.
+        # h2c always-on and connection pool defaults already match bench.
         $envOverrides = @{
-            PORT                               = [string]$Port
-            OPENAI_BASE_URL                    = $MockUrl
-            OPENAI_API_KEY                     = $ApiKey
-            AURORA_MASTER_KEY                  = $ApiKey
-            AURORA_MINIMAL_BENCH_MODE          = "true"
-            AURORA_H2C_ENABLED                 = "true"
-            AURORA_CHAT_FAST_PATH_PASSTHROUGH  = "true"
-            HTTP_MAX_IDLE_CONNS                = "4096"
-            HTTP_MAX_IDLE_CONNS_PER_HOST       = "4096"
-            HTTP_MAX_CONNS_PER_HOST            = "256"
-            MODEL_LIST_URL                     = ""
-            STORAGE_TYPE                       = "sqlite"
-            IDENTITY_ENABLED                   = "false"
-            GUARDRAILS_ENABLED                 = "false"
-            USAGE_ENABLED                      = "false"
-            LOGGING_ENABLED                    = "false"
-            METRICS_ENABLED                    = "false"
-            SEMANTIC_CACHE_ENABLED             = "false"
-            RESPONSE_CACHE_SIMPLE_ENABLED      = "false"
-            TOKEN_SAVER_ENABLED                = "false"
-            PROMPT_CACHE_MODE                  = "off"
-            SWAGGER_ENABLED                    = "false"
-            ENABLE_ANTHROPIC_INGRESS           = "false"
-            CLI_TOOLS_ENABLED                  = "false"
-            COMBOS_ENABLED                     = "false"
-            ADMIN_ENDPOINTS_ENABLED            = "false"
-            ADMIN_UI_ENABLED                   = "false"
+            PORT                              = [string]$Port
+            OPENAI_BASE_URL                   = $MockUrl
+            OPENAI_API_KEY                    = $ApiKey
+            AURORA_MASTER_KEY                 = $ApiKey
+
+            AURORA_MINIMAL_BENCH_MODE         = "true"
+            AURORA_CHAT_FAST_PATH_PASSTHROUGH = "true"
         }
 
         return Start-GatewayProcess -ExePath $ExePath -EnvOverrides $envOverrides -LogPath $logPath -NewWindow:$NewWindow
     }.GetNewClosure()
 
     FairnessNotes = @(
-        "Aurora with h2c + connection pool tuning + full feature disablement for max throughput",
-        "AURORA_MINIMAL_BENCH_MODE=true + AURORA_CHAT_FAST_PATH_PASSTHROUGH=true + PROMPT_CACHE_MODE=off",
-        "All features disabled: guardrails, cache, token saver, admin, identity, swagger, combos, anthropic ingress",
-        "h2c enables HTTP/2 multiplexing over cleartext, 4096 idle conns, 256 max per host"
+        "Aurora with bench-mode tuning only - no explicit feature disablements",
+        "AURORA_MINIMAL_BENCH_MODE=true + AURORA_CHAT_FAST_PATH_PASSTHROUGH=true",
+        "h2c always-on and connection pool tuning are now code defaults"
     )
 }
